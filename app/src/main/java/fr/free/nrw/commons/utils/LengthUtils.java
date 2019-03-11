@@ -123,4 +123,22 @@ public class LengthUtils {
         double sinHalf = Math.sin(x * 0.5D);
         return sinHalf * sinHalf;
     }
+
+    /**
+     * Computes bearing value for compass
+     *
+     * @param point1 one of the two end points
+     * @param point2 one of the two end points
+     * @return bearing value in degrees
+     */
+    public static double computeBearing(LatLng point1, LatLng point2) {
+        double deltaLong = Math.toRadians(point2.getLongitude() - point1.getLongitude());
+        double lat1 = Math.toRadians(point1.getLatitude());
+        double lat2 = Math.toRadians(point2.getLatitude());
+        double y = Math.sin(deltaLong) * Math.cos(lat2);
+        double x = Math.cos(lat1) * Math.sin(lat2) -
+                Math.sin(lat1) * Math.cos(lat2) * Math.cos(deltaLong);
+        double bearing = Math.atan2(y, x);
+        return (Math.toDegrees(bearing) + 360) % 360;
+    }
 }
