@@ -70,6 +70,7 @@ import static fr.free.nrw.commons.contributions.ContributionDao.Table.ALL_FIELDS
 import static fr.free.nrw.commons.contributions.ContributionsContentProvider.BASE_URI;
 import static fr.free.nrw.commons.location.LocationServiceManager.LOCATION_REQUEST;
 import static fr.free.nrw.commons.settings.Prefs.UPLOADS_SHOWING;
+import static fr.free.nrw.commons.utils.LengthUtils.computeBearing;
 import static fr.free.nrw.commons.utils.LengthUtils.formatDistanceBetween;
 
 public class ContributionsFragment
@@ -614,7 +615,8 @@ public class ContributionsFragment
             Place closestNearbyPlace = nearbyPlacesInfo.placeList.get(0);
             String distance = formatDistanceBetween(curLatLng, closestNearbyPlace.location);
             closestNearbyPlace.setDistance(distance);
-            nearbyNotificationCardView.updateContent(closestNearbyPlace);
+            float compass = (float) computeBearing(curLatLng, closestNearbyPlace.location);
+            nearbyNotificationCardView.updateContent(closestNearbyPlace, compass);
             if (mediaDetailPagerFragment != null && mediaDetailPagerFragment.isVisible()) {
                 nearbyNotificationCardView.setVisibility(View.GONE);
             }else {
