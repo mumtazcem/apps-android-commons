@@ -28,6 +28,7 @@ public class NearbyNotificationCardView extends SwipableCardView {
     private LinearLayout contentLayout;
     private TextView notificationTitle;
     private TextView notificationDistance;
+    private ImageView notificationCompass;
     private ImageView notificationIcon;
     private ProgressBar progressBar;
 
@@ -67,6 +68,7 @@ public class NearbyNotificationCardView extends SwipableCardView {
 
         notificationTitle = rootView.findViewById(R.id.nearby_title);
         notificationDistance = rootView.findViewById(R.id.nearby_distance);
+        notificationCompass = rootView.findViewById(R.id.nearby_compass);
 
         notificationIcon = rootView.findViewById(R.id.nearby_icon);
 
@@ -115,10 +117,12 @@ public class NearbyNotificationCardView extends SwipableCardView {
     }
 
     /**
-     * Pass place information to views.
-     * @param place Closes place where we will get information from
+     * Pass place information to views with bearing value of compass.
+     *
+     * @param place   Closes place where we will get information from
+     * @param compass bearing value of compass that would show the direction
      */
-    public void updateContent(Place place) {
+    public void updateContent(Place place, float compass) {
         Timber.d("Update nearby card notification content");
         this.setVisibility(VISIBLE);
         cardViewVisibilityState = CardViewVisibilityState.READY;
@@ -132,7 +136,7 @@ public class NearbyNotificationCardView extends SwipableCardView {
         notificationIcon.setVisibility(VISIBLE);
         notificationTitle.setText(place.name);
         notificationDistance.setText(place.distance);
-
+        notificationCompass.setRotation(compass);
     }
 
     @Override
@@ -153,6 +157,7 @@ public class NearbyNotificationCardView extends SwipableCardView {
                     // And content views visible since they are ready
                     notificationTitle.setVisibility(VISIBLE);
                     notificationDistance.setVisibility(VISIBLE);
+                    notificationCompass.setVisibility(VISIBLE);
                     notificationIcon.setVisibility(VISIBLE);
                     break;
                 case LOADING:
@@ -162,6 +167,7 @@ public class NearbyNotificationCardView extends SwipableCardView {
                     progressBar.setVisibility(VISIBLE);
                     notificationTitle.setVisibility(GONE);
                     notificationDistance.setVisibility(GONE);
+                    notificationCompass.setVisibility(GONE);
                     notificationIcon.setVisibility(GONE);
                     permissionRequestButton.setVisibility(GONE);
                     break;
