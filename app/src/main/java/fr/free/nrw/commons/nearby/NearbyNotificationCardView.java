@@ -5,6 +5,8 @@ import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.util.AttributeSet;
 import android.view.View;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -200,5 +202,24 @@ public class NearbyNotificationCardView extends SwipableCardView {
         ENABLE_GPS,
         ENABLE_LOCATION_PERMISSION, // For only after Marshmallow
         NO_PERMISSION_NEEDED
+    }
+
+    public void compassAnimationSensorInfoSetter(float degree, float currentDegree){
+        // create a rotation animation (reverse turn degree degrees)
+        RotateAnimation ra = new RotateAnimation(
+                currentDegree,
+                -degree,
+                Animation.RELATIVE_TO_SELF, 0.5f,
+                Animation.RELATIVE_TO_SELF,
+                0.5f);
+
+        // how long the animation will take place
+        ra.setDuration(210);
+
+        // set the animation after the end of the reservation status
+        ra.setFillAfter(true);
+
+        // Start the animation
+        notificationCompass.startAnimation(ra);
     }
 }
