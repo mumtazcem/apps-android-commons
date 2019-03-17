@@ -8,6 +8,10 @@ import android.content.ServiceConnection;
 import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.database.DataSetObserver;
+import android.hardware.Sensor;
+import android.hardware.SensorEvent;
+import android.hardware.SensorEventListener;
+import android.hardware.SensorManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.os.IBinder;
@@ -24,6 +28,8 @@ import android.support.v7.app.AlertDialog;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.RotateAnimation;
 import android.widget.Adapter;
 import android.widget.AdapterView;
 import android.widget.CheckBox;
@@ -66,6 +72,7 @@ import io.reactivex.disposables.Disposable;
 import io.reactivex.schedulers.Schedulers;
 import timber.log.Timber;
 
+import static android.content.Context.SENSOR_SERVICE;
 import static fr.free.nrw.commons.contributions.ContributionDao.Table.ALL_FIELDS;
 import static fr.free.nrw.commons.contributions.ContributionsContentProvider.BASE_URI;
 import static fr.free.nrw.commons.location.LocationServiceManager.LOCATION_REQUEST;
@@ -81,6 +88,7 @@ public class ContributionsFragment
                     FragmentManager.OnBackStackChangedListener,
                     ContributionsListFragment.SourceRefresher,
                     LocationUpdateListener,
+                    SensorEventListener,
                     ICampaignsView {
     @Inject @Named("default_preferences") BasicKvStore defaultKvStore;
     @Inject ContributionDao contributionDao;
@@ -107,10 +115,13 @@ public class ContributionsFragment
 
     private boolean firstLocationUpdate = true;
     public LocationServiceManager locationManager;
-
+    private SensorManager mSensorManager;
+    private Sensor mLight;
     private boolean isFragmentAttachedBefore = false;
     private View checkBoxView;
     private CheckBox checkBox;
+    // record the compass picture angle turned
+    private float currentDegree = 0f;
 
     /**
      * Since we will need to use parent activity on onAuthCookieAcquired, we have to wait
@@ -137,6 +148,8 @@ public class ContributionsFragment
     @Override
     public void onCreate(@Nullable Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+        mSensorManager = (SensorManager) getActivity().getSystemService(SENSOR_SERVICE);
+        mLight = mSensorManager.getDefaultSensor(Sensor.TYPE_LIGHT);
         setRetainInstance(true);
     }
 
@@ -479,6 +492,7 @@ public class ContributionsFragment
         super.onPause();
         locationManager.removeLocationListener(this);
         locationManager.unregisterLocationManager();
+        mSensorManager.unregisterListener(this);
     }
 
     @Override
@@ -495,7 +509,7 @@ public class ContributionsFragment
 
         firstLocationUpdate = true;
         locationManager.addLocationListener(this);
-
+        mSensorManager.registerListener(this, mLight, SensorManager.SENSOR_DELAY_NORMAL);
         boolean isSettingsChanged = defaultKvStore.getBoolean(Prefs.IS_CONTRIBUTION_COUNT_CHANGED, false);
         defaultKvStore.putBoolean(Prefs.IS_CONTRIBUTION_COUNT_CHANGED, false);
         if (isSettingsChanged) {
@@ -705,6 +719,19 @@ public class ContributionsFragment
     @Override public void onDestroyView() {
         super.onDestroyView();
         presenter.onDetachView();
+    }
+
+    @Override
+    public void onSensorChanged(SensorEvent event) {
+        // get the angle around the z-axis rotated
+        float degree = Math.round(event.values[0]);
+        nearbyNotificationCardView.compassAnimationSensorInfoSetter(degree, currentDegree);
+        currentDegree = -degree;
+    }
+
+    @Override
+    public void onAccuracyChanged(Sensor sensor, int accuracy) {
+
     }
 }
 
