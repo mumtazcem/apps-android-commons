@@ -463,11 +463,11 @@ Upload your first media by tapping on the add button.</string>
 
   <string name="this_function_needs_network_connection">This function requires network connection, please check your connection settings.</string>
   <string name="bad_token_error_proposed_solution">Upload failed due to issues with edit token. Please try logging out and in again. </string>
-  <string name="error_processing_image">Error occurred while processing the image. Please try again!</string>
+    <string name="error_processing_image">Error occurred while processing the image. Please try again!</string>
   <string name="getting_edit_token">Getting token for editing</string>
   <string name="check_category_adding_template">Adding template for category check</string>
   <string name="check_category_notification_title">Requesting category check for %1$s</string>
-  <string name="check_category_edit_summary">Requesting category check</string>
+    <string name="check_category_edit_summary">Requesting category check</string>
   <string name="check_category_success_title">Requesting category check: Success</string>
   <string name="check_category_failure_title">Requesting category check: Failed</string>
   <string name="check_category_success_message">Successfully requested category check for %1$s</string>
@@ -479,7 +479,7 @@ Upload your first media by tapping on the add button.</string>
   <string name="nominate_for_deletion_edit_deletion_request_log">Adding file to Delete requests log</string>
   <string name="nominate_for_deletion_create_deletion_request">Creating Delete requests subpage</string>
   <string name="notsure">Not sure</string>
-  <string name="send_thank_success_title">Sending Thanks: Success</string>
+    <string name="send_thank_success_title">Sending Thanks: Success</string>
   <string name="send_thank_success_message">Successfully sent thanks to %1$s</string>
   <string name="send_thank_failure_message">Failed to send thanks %1$s</string>
   <string name="send_thank_failure_title">Sending Thanks: Failure</string>
@@ -500,14 +500,14 @@ Upload your first media by tapping on the add button.</string>
   <string name="review_spam_report_problem">spam</string>
   <string name="review_c_violation_report_question">It is copyright violation because it is </string>
   <string name="review_c_violation_report_problem">copyRightViolation</string>
-  <string name="review_category_yes_button_text">NO, MIS-CATEGORIZED</string>
-  <string name="review_category_no_button_text">SEEMS FINE</string>
-  <string name="review_spam_yes_button_text">NO, OUT OF SCOPE</string>
-  <string name="review_spam_no_button_text">SEEMS FINE</string>
-  <string name="review_copyright_yes_button_text">NO, COPYRIGHT VIOLATION</string>
-  <string name="review_copyright_no_button_text">SEEMS FINE</string>
-  <string name="review_thanks_yes_button_text">YES, WHY NOT</string>
-  <string name="review_thanks_no_button_text">NEXT IMAGE</string>
+    <string name="review_category_yes_button_text">NO, MIS-CATEGORIZED</string>
+    <string name="review_category_no_button_text">SEEMS FINE</string>
+    <string name="review_spam_yes_button_text">NO, OUT OF SCOPE</string>
+    <string name="review_spam_no_button_text">SEEMS FINE</string>
+    <string name="review_copyright_yes_button_text">NO, COPYRIGHT VIOLATION</string>
+    <string name="review_copyright_no_button_text">SEEMS FINE</string>
+    <string name="review_thanks_yes_button_text">YES, WHY NOT</string>
+    <string name="review_thanks_no_button_text">NEXT IMAGE</string>
 
   <plurals name="receiving_shared_content">
     <item quantity="one">Receiving shared content. Processing the image might take some time depending on the size of the image and your device</item>
